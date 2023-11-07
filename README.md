@@ -23,7 +23,22 @@ https://github.com/ridhee1gupta/WQ-Dashboard-ELA-Hack/assets/56942399/6589f63f-d
 ## Credits
 This project was created by Nick Cheng, Ridhee Gupta, and Manuel Ron Lleras as part of IISD-ELA's Hackathon: Hacking the World's Freshwater Laboratory. 
 The following website, titled, **Develop Data Visualization Interfaces in Python with Dash**, by Real Python, was also used as a reference to build the dashboard: 
-https://realpython.com/python-dash/
+https://realpython.com/python-dash/. There were other sources used to aggregate fish data. These sources can be found in the reference list below. 
+
+### References
+Castillo, D. (2023, Feb 20). _Develop Data Visualization Interfaces in Python with Dash_. Real Python. https://realpython.com/python-dash/
+
+Clark, D., Emberley, J. (2021). _MARITIMES SPRING RESEARCH VESSEL SURVEY_ [Data Set]. Population Ecology Division, Fisheries and Oceans Canada, Dartmouth, N.S. https://open.canada.ca/data/en/dataset/fecf045a-95a2-4b69-8a40-818649a62716
+
+Ecosystems and Oceans Science, Fisheries and Oceans Canada. (2020). _Stock Status Update of 4VWX Herring for the 2019/2020 Fishing Season._ https://publications.gc.ca/collections/collection_2020/mpo-dfo/fs70-7/Fs70-7-2020-050-eng.pdf
+
+_Fishing Spots, Fishing Reports and regulations in Saint John River._ (n.d.). Fishbrain. Retrieved October 30, 2023 from https://fishbrain.com/fishing-waters/OceZhYGP/saint-john-river
+
+Science, Fisheries and Oceans Canada. (2009). _Use of the Lower Saint John River, New Brunswick, as Fish Habitat During the Spring Freshet._ https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/338079.pdf
+
+_St. John River._ (n.d.). Angler's Atlas. Retrieved October 30, 2023 from https://www.anglersatlas.com/place/724844/st-john-river
+
+The Saint John River Basin Board. (1973). _Fishes of the Upper and Middle St. John River._ https://waves-vagues.dfo-mpo.gc.ca/library-bibliotheque/21510.pdf
 
 ## License
 This project is covered under MIT Open License. 
