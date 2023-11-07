@@ -13,7 +13,7 @@ and visualize them on our platform. We also hope to have Water Quality Reports g
 
 ## Running the Project
 To start this dashboard, clone or download this repository as is and run the dashboard.py file in the terminal. A local version of the dashboard will open on your localhost:8050, which 
-can be copied to your browser's search tab and used. This dashboard is also hosted to be publicly available at [site]. 
+can be copied to your browser's search tab and used. This dashboard is also hosted to be publicly available at https://ridhee.pythonanywhere.com/. 
 
 ## Demo of the Dashboard
 To know how to use this dashboard, please follow this video link that gives a detailed demo: 
