@@ -150,8 +150,8 @@ html.Div([
     dcc.Tab(
         label = "But what does it all mean?",
         children = [
-            html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer", className = "button"),
-            dcc.Download(id = "download-explainer"),
+            html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer1", className = "button"),
+            dcc.Download(id = "download-explainer1"),
             html.P(
                 children = ("Sure, you are able to visualize this data and see " \
                               "what the trends are for your favourite watershed " \
@@ -263,8 +263,8 @@ html.Div([
                             "Download our water quality report explainer and spread your newfound knowledge about everything " \
                             "water and fish quality related!")
             ),
-            html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer", className = "button"),
-            dcc.Download(id = "download-explainer")
+            html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer2", className = "button"),
+            dcc.Download(id = "download-explainer2")
         ]
     ) # end of the third tab
 ]) # end of all tabs
@@ -311,8 +311,8 @@ def create_charts(df, param):
     return line_plot_figure, scatter_plot_figure
 
 @app.callback(
-    Output("download-explainer", "data"),
-    Input("wqi-explainer", "n_clicks"),
+    Output("download-explainer1", "data"),
+    Input("wqi-explainer1", "n_clicks"),
     prevent_initial_call = True,
 )
 
@@ -320,6 +320,14 @@ def download_data(n_clicks):
     return dcc.send_file("ELA_Hackathon_WatQC.pdf")
 
 
+@app.callback(
+    Output("download-explainer2", "data"),
+    Input("wqi-explainer2", "n_clicks"),
+    prevent_initial_call = True,
+)
+
+def download_data(n_clicks):
+    return dcc.send_file("ELA_Hackathon_WatQC.pdf")
 
 
 
