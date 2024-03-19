@@ -54,7 +54,7 @@ app.layout = html.Div(
         children = [
             html.Div(
                 children = [
-                    html.Img(src = "WATQC-Favicon\android-chrome-192x192.png", alt = "WatQC Logo", className = "header-emoji"),
+                    #html.Img(src = "android-chrome-192x192.png", alt = "WatQC Logo", className = "header-emoji"),
                     html.H1(
                         children = "WatQC Dashboard", className = "header-title"
                     ),
@@ -67,211 +67,224 @@ app.layout = html.Div(
     ],
     className = "header",
 ),
-html.Div([
-    dcc.Tabs([
-        dcc.Tab(
-            label = "Analyze our data!",
-            children = [
-                html.P(
-                    id = "no-content",
-                    style = {"color": "#2580C8", "text-align": "center"}
-                ),
-                html.Div(
-                    children = [
-                        html.Div(children = "Sites", className = "menu-title"),
-                            dcc.Dropdown(
-                                id = "site-filter",
-                                options = [
-                                    {"label": site, "value": site}
-                                    for site in sites
-                                ],
-                                value = "Adam's Lake",
-                                clearable = False,
-                                searchable = True,
-                                className = "dropdown",
-                                multi = True
-                            ),
-                    ]
-                ),
-                html.Div(
-                    children = [
-                        html.Div(children = "Parameters", className = "menu-title"),
-                            dcc.Dropdown(
-                                id = "parameter-filter",
-                                options = [
-                                    {"label": param, "value": param}
-                                    for param in parameters
-                                ],
-                                value = "Ammonia",
-                                clearable = False,
-                                searchable = True,
-                                className = "dropdown",
-                            ),
-                    ],
-                    className = "menu",
-                ),
-                html.Div(
-                    children = [
+# start of tabs
+html.Div(children = [
+            dcc.Tabs(
+                id = "main-content",
+                parent_className = "custom-tabs",
+                className = "custom-tabs-container",
+                children = [
+                    dcc.Tab( #tab 1
+                        label = "Analyze our data!",
+                        value = 'tab-1',
+                        className = 'custom-tab',
+                        selected_className = 'custom-tab--selected',
+                        children = [
+                            html.P(
+                                id = "no-content",
+                           #     style = {"color": "#2580C8", "text-align": "center"}
+                        ),
+                        html.Div(
+                            children = [
+                                html.Div(children = "Sites", className = "menu-title"),
+                                    dcc.Dropdown(
+                                        id = "site-filter",
+                                        options = [
+                                            {"label": site, "value": site}
+                                            for site in sites
+                                        ],
+                                        value = "Adam's Lake",
+                                        clearable = False,
+                                        searchable = True,
+                                        className = "dropdown",
+                                        multi = True
+                                    ),
+                                html.Div(children = "Parameters", className = "menu-title"),
+                                    dcc.Dropdown(
+                                        id = "parameter-filter",
+                                        options = [
+                                            {"label": param, "value": param}
+                                            for param in parameters
+                                        ],
+                                        value = "Ammonia",
+                                        clearable = False,
+                                        searchable = True,
+                                        className = "dropdown",
+                                        #multi = True
+                                    ),
+                            ],
+                            className = "menu",
+                        ),
+                        html.Div(
+                            children = [
+                                html.Div(
+                                    children = dcc.Graph(
+                                    id = "line-plot",
+                                    config = {"displayModeBar": False},
+                                    figure = fig_line
+                                ),
+                                className = "card",
+                                ),
+                            ],
+                        ),
                         html.Div(
                             children = dcc.Graph(
-                                id = "line-plot",
+                                id = "scatter-plot",
                                 config = {"displayModeBar": False},
-                                figure = fig_line
+                                figure = fig_scatter
                             ),
                             className = "card",
                         ),
                     ],
-                ),
-                html.Div(
-                    children = dcc.Graph(
-                        id = "scatter-plot",
-                        config = {"displayModeBar": False},
-                        figure = fig_scatter
-                    ),
-                    className = "card",
-                ),
-            ],
-    ), # end of first tab
-    dcc.Tab(
-        label = "Every season is fishing season!",
-        children = [
-                html.Embed(
-                    src = "//leaconsulting.maps.arcgis.com/apps/Embed/index.html" \
-                          "?webmap=32038bf69ed841b29d7249d4b4193290&extent=-66.0204," \
-                          "45.3155,-66.0082,45.3202&zoom=true&previewImage=false&" \
-                          "scale=true&search=true&searchextent=true&details=true&"
-                          "legendlayers=true&active_panel=legend&disable_scroll=true&theme=dark",
-                    title = "Hackathon Map - WatQC Dashboard",
-                    height = "600", width = "1000"
-                    #className = "embed-container"
-                )
-        ]
-    ), # end of second tab
-    dcc.Tab(
-        label = "But what does it all mean?",
-        children = [
-            html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer1", className = "button"),
-            dcc.Download(id = "download-explainer1"),
-            html.P(
-                children = ("Sure, you are able to visualize this data and see " \
-                              "what the trends are for your favourite watershed " \
-                              "but what does this really mean? Have we ever thought " \
-                              "about what it means for a waterbody to have high pH values? " \
-                              "What about declining fish diversity? "
-                              "We explain some of these factors below!")
-            ),
-            html.P(
-                children = ("Key Takeaways:"),
-                style = {'color': '#2580C8',
-                         'margin': 10,
-                         'font-size': 20,
-                         'text-align': 'justify',
-                         'max-width': 950,
-                         'font-weight': 'bold'}
-            ),
-            html.Ul(
+            ), # end of first tab
+            dcc.Tab(
+                label = "Every season is fishing season!",
+                value = 'tab-2',
+                className = 'custom-tab',
+                selected_className = 'custom-tab--selected',
                 children = [
-                    html.Li(
-                        ("Temperature, pH, and salinity greatly influence plant and animal survival in water bodies."),
-                        style = {'color': '#2580C8',
-                                 'margin': 10,
-                                 'font-size': 20,
-                                 'text-align': 'justify',
-                                 'max-width': 950}
-                                 #'font-weight': 'bold'}
-                    ),
-                    html.Li(
-                        ("Ammonia, phosphate, and E. Coli, when disturbed by pollution, negatively impact water body properties."),
-                        style = {'color': '#2580C8',
-                                 'margin': 10,
-                                 'font-size': 20,
-                                 'text-align': 'justify',
-                                 'max-width': 950}
-                    ),
-                    html.Li(
-                        ("Fish species, including Bait, Forage, and Sport Fish, maintain ecological balance."),
-                        style = {'color': '#2580C8',
-                                 'margin': 10,
-                                 'font-size': 20,
-                                 'text-align': 'justify',
-                                 'max-width': 950}
-                    )
+                        html.Embed(
+                            src = "//leaconsulting.maps.arcgis.com/apps/Embed/index.html" \
+                                "?webmap=32038bf69ed841b29d7249d4b4193290&extent=-66.0204," \
+                                "45.3155,-66.0082,45.3202&zoom=true&previewImage=false&" \
+                                "scale=true&search=true&searchextent=true&details=true&"
+                                "legendlayers=true&active_panel=legend&disable_scroll=true&theme=dark",
+                            title = "Hackathon Map - WatQC Dashboard",
+                            height = "600", width = "1000"
+                            #className = "embed-container"
+                        )
                 ]
-            ),
-            html.P(
-                children = ("Observations from Sites:"),
-                style = {'color': '#2580C8',
-                         'margin': 10,
-                         'font-size': 20,
-                         'text-align': 'justify',
-                         'max-width': 950,
-                         'font-weight': 'bold'}
-            ),
-            html.Ul(
+            ), # end of second tab
+            dcc.Tab(
+                label = "But what does it all mean?",
+                value = 'tab-3',
+                className = 'custom-tab',
+                selected_className = 'custom-tab--selected',
                 children = [
-                    html.Li(
-                        ("Similar water bodies can be compared despite unique baseline physical parameters."),
-                        style = {'color': '#2580C8',
-                                 'margin': 10,
-                                 'font-size': 20,
-                                 'text-align': 'justify',
-                                 'max-width': 950}
-                                 #'font-weight': 'bold'}
+                    html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer1", className = "button"),
+                    dcc.Download(id = "download-explainer1"),
+                    html.P(
+                        children = ("Sure, you are able to visualize this data and see " \
+                                    "what the trends are for your favourite watershed " \
+                                    "but what does this really mean? Have we ever thought " \
+                                    "about what it means for a waterbody to have high pH values? " \
+                                    "What about declining fish diversity? "
+                                    "We explain some of these factors below!")
                     ),
-                    html.Li(
-                        ("Physical parameters are affected by large-scale factors such as acid rain and global warming."),
+                    html.P(
+                        children = ("Key Takeaways:"),
                         style = {'color': '#2580C8',
-                                 'margin': 10,
-                                 'font-size': 20,
-                                 'text-align': 'justify',
-                                 'max-width': 950}
-                    )
-                ]
-            ),
-            html.P(
-                children = ("Water Quality Index (WQI):"),
-                style = {'color': '#2580C8',
-                         'margin': 10,
-                         'font-size': 20,
-                         'text-align': 'justify',
-                         'max-width': 950,
-                         'font-weight': 'bold'}
-            ),
-            html.Ul(
-                children = [
-                    html.Li(
-                        ("A generalized score (0-100) assesses water quality based on parameters compared to recommended thresholds."),
-                        style = {'color': '#2580C8',
-                                 'margin': 10,
-                                 'font-size': 20,
-                                 'text-align': 'justify',
-                                 'max-width': 950}
-                                 #'font-weight': 'bold'}
+                                'margin': 10,
+                                'font-size': 20,
+                                'text-align': 'justify',
+                                'max-width': 950,
+                                'font-weight': 'bold'}
                     ),
-                    html.Li(
-                        ("Categories include Pristine, Usually Desirable, Sometimes Desirable, Often Not Desirable, Usually Not Desirable."),
+                    html.Ul(
+                        children = [
+                            html.Li(
+                                ("Temperature, pH, and salinity greatly influence plant and animal survival in water bodies."),
+                                style = {'color': '#2580C8',
+                                        'margin': 10,
+                                        'font-size': 20,
+                                        'text-align': 'justify',
+                                        'max-width': 950}
+                                        #'font-weight': 'bold'}
+                            ),
+                            html.Li(
+                                ("Ammonia, phosphate, and E. Coli, when disturbed by pollution, negatively impact water body properties."),
+                                style = {'color': '#2580C8',
+                                        'margin': 10,
+                                        'font-size': 20,
+                                        'text-align': 'justify',
+                                        'max-width': 950}
+                            ),
+                            html.Li(
+                                ("Fish species, including Bait, Forage, and Sport Fish, maintain ecological balance."),
+                                style = {'color': '#2580C8',
+                                        'margin': 10,
+                                        'font-size': 20,
+                                        'text-align': 'justify',
+                                        'max-width': 950}
+                            )
+                        ]
+                    ),
+                    html.P(
+                        children = ("Observations from Sites:"),
                         style = {'color': '#2580C8',
-                                 'margin': 10,
-                                 'font-size': 20,
-                                 'text-align': 'justify',
-                                 'max-width': 950}
-                    )
+                                'margin': 10,
+                                'font-size': 20,
+                                'text-align': 'justify',
+                                'max-width': 950,
+                                'font-weight': 'bold'}
+                    ),
+                    html.Ul(
+                        children = [
+                            html.Li(
+                                ("Similar water bodies can be compared despite unique baseline physical parameters."),
+                                style = {'color': '#2580C8',
+                                        'margin': 10,
+                                        'font-size': 20,
+                                        'text-align': 'justify',
+                                        'max-width': 950}
+                                        #'font-weight': 'bold'}
+                            ),
+                            html.Li(
+                                ("Physical parameters are affected by large-scale factors such as acid rain and global warming."),
+                                style = {'color': '#2580C8',
+                                        'margin': 10,
+                                        'font-size': 20,
+                                        'text-align': 'justify',
+                                        'max-width': 950}
+                            )
+                        ]
+                    ),
+                    html.P(
+                        children = ("Water Quality Index (WQI):"),
+                        style = {'color': '#2580C8',
+                                'margin': 10,
+                                'font-size': 20,
+                                'text-align': 'justify',
+                                'max-width': 950,
+                                'font-weight': 'bold'}
+                    ),
+                    html.Ul(
+                        children = [
+                            html.Li(
+                                ("A generalized score (0-100) assesses water quality based on parameters compared to recommended thresholds."),
+                                style = {'color': '#2580C8',
+                                        'margin': 10,
+                                        'font-size': 20,
+                                        'text-align': 'justify',
+                                        'max-width': 950}
+                                        #'font-weight': 'bold'}
+                            ),
+                            html.Li(
+                                ("Categories include Pristine, Usually Desirable, Sometimes Desirable, Often Not Desirable, Usually Not Desirable."),
+                                style = {'color': '#2580C8',
+                                        'margin': 10,
+                                        'font-size': 20,
+                                        'text-align': 'justify',
+                                        'max-width': 950}
+                            )
+                        ]
+                    ),
+                    html.P(
+                        children = ("Want to learn more about the science behind water quality and what all the trends mean? " \
+                                    "Download our water quality report explainer and spread your newfound knowledge about everything " \
+                                    "water and fish quality related!")
+                    ),  
+                    html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer2", className = "button"),
+                    dcc.Download(id = "download-explainer2")
                 ]
-            ),
-            html.P(
-                children = ("Want to learn more about the science behind water quality and what all the trends mean? " \
-                            "Download our water quality report explainer and spread your newfound knowledge about everything " \
-                            "water and fish quality related!")
-            ),
-            html.Button("Download our Water Quality Report Explainer", id = "wqi-explainer2", className = "button"),
-            dcc.Download(id = "download-explainer2")
-        ]
-    ) # end of the third tab
-]) # end of all tabs
-],
-className = "wrapper",
-)
+            ) # end of the third tab
+            ]
+        ),
+        ], # end of all tabs,
+    className = "wrapper",
+),
 ])
+
 
 
 
@@ -319,7 +332,6 @@ def create_charts(df, param):
 def download_data(n_clicks):
     return dcc.send_file("ELA_Hackathon_WatQC.pdf")
 
-
 @app.callback(
     Output("download-explainer2", "data"),
     Input("wqi-explainer2", "n_clicks"),
@@ -328,6 +340,7 @@ def download_data(n_clicks):
 
 def download_data(n_clicks):
     return dcc.send_file("ELA_Hackathon_WatQC.pdf")
+
 
 
 
