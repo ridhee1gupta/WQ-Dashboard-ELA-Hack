@@ -81,7 +81,8 @@ html.Div(children = [
                         selected_className = 'custom-tab--selected',
                         children = [
                             html.P(
-                                id = "no-content",
+                                #children = ("Trend analysis for chosen site and parameter."),
+                                id = "no-content"
                            #     style = {"color": "#2580C8", "text-align": "center"}
                         ),
                         html.Div(
@@ -127,22 +128,18 @@ html.Div(children = [
                                 ),
                             ],
                         ),
-                        html.Div(
-                            children = dcc.Graph(
-                                id = "scatter-plot",
-                                config = {"displayModeBar": False},
-                                figure = fig_scatter
-                            ),
-                            className = "card",
-                        ),
-                    ],
-            ), # end of first tab
-            dcc.Tab(
-                label = "Every season is fishing season!",
-                value = 'tab-2',
-                className = 'custom-tab',
-                selected_className = 'custom-tab--selected',
-                children = [
+                        #html.Div(
+                        #    children = dcc.Graph(
+                        #        id = "scatter-plot",
+                        #        config = {"displayModeBar": False},
+                        #        figure = fig_scatter
+                        #    ),
+                        #    className = "card",
+                        #),
+                        #html.P(
+                        #    children = ("Spatial visualization of parameters across St. John based on data" \
+                        #                "collected.")
+                        #),
                         html.Embed(
                             src = "//leaconsulting.maps.arcgis.com/apps/Embed/index.html" \
                                 "?webmap=32038bf69ed841b29d7249d4b4193290&extent=-66.0204," \
@@ -153,6 +150,15 @@ html.Div(children = [
                             height = "600", width = "1000"
                             #className = "embed-container"
                         )
+                    ],
+            ), # end of first tab
+            dcc.Tab(
+                label = "Every season is fishing season!",
+                value = 'tab-2',
+                className = 'custom-tab',
+                selected_className = 'custom-tab--selected',
+                children = [
+                        
                 ]
             ), # end of second tab
             dcc.Tab(
@@ -291,7 +297,7 @@ html.Div(children = [
 
 @app.callback(
     Output("line-plot", "figure"),
-    Output("scatter-plot", "figure"),
+    #Output("scatter-plot", "figure"),
     Output("no-content", "children"),
     Input("site-filter", "value"),
     Input("parameter-filter", "value"),
@@ -307,10 +313,10 @@ def update_charts(sites, param):
     mask = filtered_data.MonitoringLocationName.isin(sites)
     #print(sites)
     if not filtered_data[mask].empty:
-        line_fig, scatter_fig = create_charts(filtered_data[mask], param)
-        return line_fig, scatter_fig, ""
+        line_fig = create_charts(filtered_data[mask], param)
+        return line_fig, ""
     else:
-        return no_update, no_update, f"There is no data recorded for your selections :("
+        return no_update, f"There is no data recorded for your selections :("
 
 def create_charts(df, param):
     unit = df["ResultUnit"].iloc[0]
@@ -318,10 +324,10 @@ def create_charts(df, param):
     line_plot_figure = px.line(df, x="ActivityStartDate", y="ResultValue", color = "MonitoringLocationName", \
                     labels = {"ActivityStartDate": "Date", "ResultValue": f"{param} ({unit})", "MonitoringLocationName": "Site"}, markers=True, \
                     title = f"Abundance of {param} over the years")
-    scatter_plot_figure = px.scatter(df, x="ActivityStartDate", y="ResultValue", color = "MonitoringLocationName", \
-                    labels = {"ActivityStartDate": "Date", "ResultValue": f"{param} ({unit})", "MonitoringLocationName": "Site"}, \
-                    title = f"Abundance of {param} over the years")
-    return line_plot_figure, scatter_plot_figure
+    #scatter_plot_figure = px.scatter(df, x="ActivityStartDate", y="ResultValue", color = "MonitoringLocationName", \
+    #                labels = {"ActivityStartDate": "Date", "ResultValue": f"{param} ({unit})", "MonitoringLocationName": "Site"}, \
+    #                title = f"Abundance of {param} over the years")
+    return line_plot_figure
 
 @app.callback(
     Output("download-explainer1", "data"),
